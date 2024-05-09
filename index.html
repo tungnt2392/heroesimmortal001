@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <title>Unity WebGL Player | Merge Alphabet</title>
+    <title>Unity WebGL Player | DapBalloon</title>
     <link rel="shortcut icon" href="TemplateData/favicon.ico">
     <link rel="stylesheet" href="TemplateData/style.css">
   </head>
@@ -20,7 +20,7 @@
       <div id="unity-footer">
         <div id="unity-webgl-logo"></div>
         <div id="unity-fullscreen-button"></div>
-        <div id="unity-build-title">Merge Alphabet</div>
+        <div id="unity-build-title">DapBalloon</div>
       </div>
     </div>
     <script>
@@ -56,15 +56,15 @@
       }
 
       var buildUrl = "Build";
-      var loaderUrl = buildUrl + "/New folder.loader.js";
+      var loaderUrl = buildUrl + "/webglbuild.loader.js";
       var config = {
-        dataUrl: buildUrl + "/New folder.data.unityweb",
-        frameworkUrl: buildUrl + "/New folder.framework.js.unityweb",
-        codeUrl: buildUrl + "/New folder.wasm.unityweb",
+        dataUrl: buildUrl + "/webglbuild.data.unityweb",
+        frameworkUrl: buildUrl + "/webglbuild.framework.js.unityweb",
+        codeUrl: buildUrl + "/webglbuild.wasm.unityweb",
         streamingAssetsUrl: "StreamingAssets",
-        companyName: "PocketAceStudio",
-        productName: "Merge Alphabet",
-        productVersion: "0.1.1",
+        companyName: "DefaultCompany",
+        productName: "DapBalloon",
+        productVersion: "1.0",
         showBanner: unityShowBanner,
       };
 
@@ -97,7 +97,6 @@
         canvas.style.height = "600px";
       }
 
-      canvas.style.background = "url('" + buildUrl + "/New folder.jpg.unityweb') center / cover";
       loadingBar.style.display = "block";
 
       var script = document.createElement("script");
