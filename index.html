@@ -1,48 +1,47 @@
 <!DOCTYPE html>
-<html>
-  <head>
+<html lang="en-us">
+<head>
     <meta charset="utf-8">
-
-    <title>Cocos Creator | NewProject</title>
-
-    <meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1,minimum-scale=1,maximum-scale=1,minimal-ui=true"/>
-    <meta name="apple-mobile-web-app-capable" content="yes"/>
-    <meta name="full-screen" content="yes"/>
-    <meta name="screen-orientation" content="portrait"/>
-    <meta name="x5-fullscreen" content="true"/>
-    <meta name="360-fullscreen" content="true"/>
-    
-    <meta name="renderer" content="webkit"/>
-    <meta name="force-rendering" content="webkit"/>
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
-    
-    <link rel="stylesheet" type="text/css" href="./style.css"/>
-    <link rel="icon" href="favicon.ico"/>
-  </head>
-  <body>
-    <h1 class="header">NewProject</h1>
-
-    <div id="GameDiv" cc_exact_fit_screen="false" style="width: 1280px; height: 960px;">
-      <div id="Cocos3dGameContainer">
-        <canvas id="GameCanvas" width="1280" height="960" tabindex="99"></canvas>
-      </div>
-    </div>
-    <p class="footer">
-      Created with <a href="https://www.cocos.com/products" title="Cocos Creator">Cocos Creator</a>
-    </p>
-    <!-- Polyfills bundle. -->
-
-<script src="src/polyfills.bundle.js" charset="utf-8"> </script>    
-
-
-<!-- SystemJS support. -->
-<script src="src/system.bundle.js" charset="utf-8"> </script>
-
-<!-- Import map -->
-<script src="src/import-map.json" type="systemjs-importmap" charset="utf-8"> </script>
-
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Sample Bridge</title>
+    <script src="playDeckBridge.js"></script>
+</head>
+<body class="dark">
+<div id="unity-container" style="position: absolute; width: 100%; height: 100%">
+    <canvas id="unity-canvas" width=960 height=600 style="width: 100%; height: 100%"></canvas>
+</div>
 <script>
-    System.import('./index.js').catch(function(err) { console.error(err); })
+    const buildUrl = "Build";
+    const loaderUrl = buildUrl + "/bb0d9ecdb05db3e84da20bd14a4f84dc.loader.js";
+    const config = {
+        dataUrl: buildUrl + "/509216c76071c93731dd825bfd2cea6b.data",
+        frameworkUrl: buildUrl + "/ebc9f3593b0fb8142dbcf9b88fc01108.framework.js",
+        codeUrl: buildUrl + "/996a3b52a0d9573b3a83d31dec9a9703.wasm",
+        streamingAssetsUrl: "StreamingAssets",
+        companyName: "PlayDeck",
+        productName: "Sample Bridge",
+        productVersion: "0.1",
+    };
+
+    const container = document.querySelector("#unity-container");
+    const canvas = document.querySelector("#unity-canvas");
+
+    if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
+        config.devicePixelRatio = window.devicePixelRatio;
+    }
+    
+    const script = document.createElement("script");
+    script.src = loaderUrl;
+    script.onload = () => {
+        const playdeckBridgeInstance = playDeckBridge();
+        createUnityInstance(canvas, config, (progress) => {
+            playdeckBridgeInstance?.setLoadingProgress(progress * 100)
+        }).then(unityInstance => {
+            playdeckBridgeInstance?.init(unityInstance);
+        });
+    };
+    document.body.appendChild(script);
 </script>
-  </body>
+</body>
 </html>
